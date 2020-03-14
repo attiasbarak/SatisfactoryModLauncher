@@ -18,25 +18,27 @@ export default {
 
 <style>
 :root {
-  --background: #3f3f3f;
-  --normal: #575757;
-  --sec: #787878;
-  --hover: #cccbcb;
-  --active: #e79b52;
-  --text: #fff;
+  --c-dark: #3f3f3f;
+  --c-light: #eeeeee;
+  --c-background: #3f3f3f;
+  --c-normal: #575757;
+  --c-sec: #787878;
+  --c-hover: #cccbcb;
+  --c-active: #e79b52;
+  --c-text: #fff;
 }
 
 .bg-normal {
-  background-color: var(--normal);
+  background-color: var(--c-normal);
 }
 .bg-sec {
-  background-color: var(--sec);
+  background-color: var(--c-sec);
 }
 .bg-hover {
-  background-color: var(--hover);
+  background-color: var(--c-hover);
 }
 .bg-active {
-  background-color: var(--active);
+  background-color: var(--c-active);
 }
 
 *:focus {
@@ -82,13 +84,13 @@ main,
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: var(--background);
-  color: var(--text);
+  background-color: var(--c-background);
+  color: var(--c-text);
   font-family: "Segoe UI";
 }
 
 #app {
-  border-bottom: solid var(--normal) 15px;
+  border-bottom: solid var(--c-normal) 15px;
   font-size: 12pt;
 }
 
@@ -103,6 +105,6 @@ header {
   background-color: #fff;
   color: #000;
   padding: 25px;
-  border-bottom: solid var(--sec) 5px;
+  border-bottom: solid var(--c-sec) 5px;
 }
 </style>

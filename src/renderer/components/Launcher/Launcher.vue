@@ -1,6 +1,6 @@
 <template>
   <div style="overflow:hidden;">
-    <header>
+    <header class="mb-2">
       <h1>Satisfactory Mod Launcher</h1>
       <p class="lead">
         SML Version:

@@ -20,12 +20,12 @@
 
 <style>
 .titlebar {
-  background: var(--background);
+  background: var(--c-dark);
   -webkit-app-region: drag;
 }
 
 .title-btn {
-  background-color: var(--normal);
+  background-color: var(--c-normal);
   background-image: url(./assats/icon-cross.png);
   background-repeat: no-repeat;
   background-size: 15px 15px;
@@ -40,7 +40,7 @@
 }
 
 .tabs {
-  border-bottom: solid var(--normal) 5px;
+  border-bottom: solid var(--c-normal) 5px;
   margin: 0;
   padding-top: 8px;
   padding-left: 8px;
@@ -48,7 +48,7 @@
 }
 
 .tab-item {
-  background-color: var(--sec);
+  background-color: var(--c-sec);
   background-image: url(./assats/icon-tab.png);
   background-repeat: no-repeat;
   background-position: 15px 8px;
@@ -72,18 +72,18 @@
 
 .title-btn:hover,
 .tab-item:hover {
-  background-color: var(--hover);
+  background-color: var(--c-hover);
   color: #fff;
   text-decoration: none;
 }
 
 .title-btn:active,
 .tab-item:active {
-  background-color: var(--active);
+  background-color: var(--c-active);
   color: #fff;
 }
 
 .tabs .active {
-  background-color: var(--normal);
+  background-color: var(--c-normal);
 }
 </style>
