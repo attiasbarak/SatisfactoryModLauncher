@@ -72,8 +72,8 @@ export default {
   color: #fff !important;
 }
 
-
-*:focus, *:active {
+*:focus,
+*:active {
   outline: none !important;
 }
 
@@ -147,7 +147,9 @@ main,
 header {
   background-color: #fff;
   color: #000;
-  padding: 25px;
   border-bottom: solid var(--c-sec) 5px;
+  max-height: 150px;
+  min-height: 150px;
+  overflow: hidden;
 }
 </style>

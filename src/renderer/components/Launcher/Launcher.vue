@@ -1,25 +1,24 @@
 <template>
   <div style="overflow:hidden;">
-    <header class="mb-2">
+    <header class="d-flex flex-column justify-content-center p-4">
       <h1>Satisfactory Mod Launcher</h1>
-      <p class="lead">
-        SML Version:
+      <p>
         {{
           selectedSatisfactoryInstall
-            ? selectedSatisfactoryInstall.smlVersion ||
+            ? "SML Version " + selectedSatisfactoryInstall.smlVersion ||
               "Install a mod to install SML"
-            : "Select a Satisfactory Install"
+            : "Satisfactory is missing, Try reinstalling the game."
         }}
       </p>
     </header>
 
     <div class="d-flex">
       <!-- Installed mods list -->
-      <div class="flex-fill m-2">
-        <table
-          class="d-block"
-          style="height: 505px; overflow: auto;"
-        >
+      <div
+        class="w-100"
+        style="height: calc(100vh - 214px); overflow: auto;"
+      >
+        <table class="d-block">
           <tbody class="d-block w-100">
             <InstalledMods
               v-model="selectedMod"
@@ -78,7 +77,10 @@
       </div>
 
       <!-- Launch button -->
-      <div style="min-width: 400px; max-width: 400px">
+      <div
+        class="p-2"
+        style="min-width: 400px; max-width: 400px"
+      >
         <div class="launch-btn-base d-flex align-items-center justify-content-center">
           <button
             class="launch-btn"
@@ -307,7 +309,7 @@ export default {
 
 <style>
 .launch-btn-base {
-  height: 80%;
+  height: 450px;
   background-color: transparent;
   background-image: url(./assats/btn-launch-base.png);
   background-repeat: no-repeat;
@@ -318,8 +320,8 @@ export default {
 }
 
 .launch-btn {
-  height: 65%;
-  width: 65%;
+  height: 69%;
+  width: 69%;
   background-color: transparent;
   background-image: url(./assats/btn-launch-normal.png);
   background-repeat: no-repeat;
@@ -327,8 +329,8 @@ export default {
   background-position-x: 50%;
   border: none;
   position: relative;
-  top: -15%;
-  left: 0;
+  top: -13%;
+  left: 0.5%;
   transition: ease-out 0.25s;
 }
 
@@ -342,7 +344,7 @@ export default {
 }
 
 .launch-slc-base {
-  height: 80%;
+  height: 150px;
   background-color: transparent;
   background-image: url(./assats/slc-launch-base.png);
   background-repeat: no-repeat;
@@ -351,5 +353,6 @@ export default {
   border: none;
   position: relative;
   padding: 25px 30px;
+  margin-top: -20px;
 }
 </style>
