@@ -76,10 +76,7 @@
       </div>
 
       <!-- Launch button -->
-      <div
-        class="m-2"
-        style="width:350px"
-      >
+      <div style="width: 400px">
         <div class="launch-btn-base d-flex align-items-center justify-content-center">
           <button
             class="launch-btn"
@@ -313,7 +310,7 @@ export default {
 
 <style>
 .launch-btn-base {
-  height: 400px;
+  height: 80%;
   background-color: transparent;
   background-image: url(./assats/btn-launch-base.png);
   background-repeat: no-repeat;
@@ -324,16 +321,17 @@ export default {
 }
 
 .launch-btn {
-  height: 250px;
-  width: 250px;
+  height: 69%;
+  width: 69%;
   background-color: transparent;
   background-image: url(./assats/btn-launch-normal.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position-x: 50%;
   border: none;
-  position: absolute;
-  top: 5px;
+  position: relative;
+  top: -13%;
+  left: 0;
   transition: ease-out 0.25s;
 }
 
