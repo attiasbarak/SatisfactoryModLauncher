@@ -40,6 +40,9 @@
                   <td class="p-2 w-100">
                     <h6 class="m-0">
                       {{ item.name || "" }}
+                      <span
+                        class="badge badge-danger mx-1"
+                      >{{ !isModUpdated(item) ? 'Outdated' : '' }}</span>
                     </h6>
                     <small>
                       by
@@ -63,7 +66,9 @@
                   </td>
                   <td class="p-2 w-25 d-flex">
                     <button class="btn btn-normal btn-sm m-1">
-                      Enabled
+                      {{
+                        !isModUpdated(item) ? "Disabled" : "Enabled"
+                      }}
                     </button>
                     <button class="btn btn-outline-danger btn-sm m-1">
                       X
