@@ -20,6 +20,7 @@
 
 <style>
 .titlebar {
+  background: var(--background);
   -webkit-app-region: drag;
 }
 
