@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 // eslint-disable-next-line import/no-unresolved
-const Launcher = require('@/components/Launcher');
+const Launcher = require('@/components/Launcher/Launcher');
 
 Vue.use(Router);
 

@@ -1,9 +1,7 @@
-
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import { autoUpdater } from 'electron-updater';
 import WebSocket from 'ws';
-
 
 /**
  * Set `__static` path to static files in production
@@ -29,11 +27,12 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 600,
     useContentSize: true,
-    width: 1050,
-    minWidth: 980,
-    minHeight: 500,
+    height: 800,
+    width: 1200,
+    minHeight: 600,
+    minWidth: 800,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -101,6 +100,7 @@ if (app.requestSingleInstanceLock()) {
   const wss = new WebSocket.Server({ port: 33642 });
   wss.on('connection', (ws) => {
     ws.on('message', (message) => {
+      // eslint-disable-next-line no-console
       console.log('received: %s', message);
     });
   });
