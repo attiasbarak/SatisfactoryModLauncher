@@ -19,12 +19,13 @@ export default {
 <style>
 :root {
   --c-dark: #3f3f3f;
-  --c-light: #eeeeee;
+  --c-light: #aaaaaa;
   --c-background: #3f3f3f;
   --c-normal: #575757;
   --c-sec: #787878;
   --c-hover: #cccbcb;
   --c-active: #e79b52;
+  --c-dan: #bb3535;
   --c-text: #fff;
 }
 
@@ -41,8 +42,50 @@ export default {
   background-color: var(--c-active);
 }
 
-*:focus {
+.btn-normal {
+  background-color: var(--c-normal) !important;
+  color: #fff !important;
+}
+
+.btn-normal:hover {
+  background-color: var(--c-hover) !important;
+  color: #fff !important;
+}
+
+.btn-normal:active {
+  background-color: var(--c-active) !important;
+  color: #fff !important;
+}
+
+.btn-sec {
+  background-color: var(--c-sec) !important;
+  color: #fff !important;
+}
+
+.btn-sec:hover {
+  background-color: var(--c-hover) !important;
+  color: #fff !important;
+}
+
+.btn-sec:active {
+  background-color: var(--c-active) !important;
+  color: #fff !important;
+}
+
+
+*:focus, *:active {
   outline: none !important;
+}
+
+.disabled,
+.outdated {
+  color: var(--c-light);
+}
+
+.disabled img,
+.outdated img {
+  filter: grayscale(1);
+  content: "ddd";
 }
 
 @font-face {
