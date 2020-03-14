@@ -88,7 +88,7 @@ main,
 }
 
 #app {
-  border-bottom: solid var(--background) 15px;
+  border-bottom: solid var(--normal) 15px;
   font-size: 12pt;
 }
 
