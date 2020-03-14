@@ -84,7 +84,7 @@
           />
         </div>
 
-        <div class="w-100 p-2">
+        <div class="launch-slc-base">
           <select
             v-model="selectedSatisfactoryInstall"
             class="form-control"
@@ -342,5 +342,18 @@ export default {
 .launch-btn:active {
   background-image: url(./assats/btn-launch-pressed.png);
   transition: none;
+}
+
+.launch-slc-base {
+  height: 80%;
+  background-color: transparent;
+  background-image: url(./assats/slc-launch-base.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: 50%;
+  border: none;
+  position: relative;
+  padding: 25px 30px;
+  margin-top: -4%;
 }
 </style>
