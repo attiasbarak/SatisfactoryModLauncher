@@ -16,27 +16,20 @@
     <div class="d-flex">
       <!-- Installed mods list -->
       <div class="flex-fill m-2">
-        <input
-          v-model="search"
-          class="form-control mb-2"
-          type="text"
-          placeholder="Search"
-          aria-label="Search"
-        >
-
         <table
           class="d-block"
           style="height: 505px; overflow: auto;"
         >
           <tbody class="d-block w-100">
             <InstalledMods
-              v-if="searchMods"
               v-model="selectedMod"
               :objects="searchMods"
-              :can-select="false"
             >
               <template slot-scope="{ item }">
-                <tr class="w-100 d-flex flex-row align-items-center">
+                <tr
+                  class="w-100 d-flex flex-row align-items-center"
+                  :class="!isModUpdated(item) ? 'outdated' : ''"
+                >
                   <td class="p-2">
                     <img
                       :src="item.logo || noImageURL"
@@ -45,28 +38,37 @@
                       style="height: 75px; width: 75px; object-fit: contain;"
                     >
                   </td>
-                  <td class="flex-fill p-2">
-                    {{ item.name || "" }}
-                    by
-                    {{
-                      item.authors.map(author => author.user.username).join(", ")
-                    }}
+                  <td class="p-2 w-100">
+                    <h6 class="m-0">
+                      {{ item.name || "" }}
+                    </h6>
+                    <small>
+                      by
+                      {{
+                        item.authors.map(author => author.user.username).join(", ")
+                      }}
+                    </small>
                   </td>
-                  <td class="p-2">
+                  <td class="p-2 w-25">
                     {{
-                      item.versions[0] ? item.versions[0].version : "N/A"
+                      item.versions[0] ? item.versions[0].version : "Unknown"
                     }}
+                    <br>
+                    <small>
+                      {{
+                        item.last_version_date
+                          ? new Date(item.last_version_date).toLocaleDateString()
+                          : ""
+                      }}
+                    </small>
                   </td>
-                  <td class="p-2">
-                    {{
-                      item.last_version_date
-                        ? new Date(item.last_version_date).toLocaleDateString()
-                        : "N/A"
-                    }}
-                  </td>
-                  <td class="p-2">
-                    <button>Disable</button>
-                    <button>Uninstall</button>
+                  <td class="p-2 w-25 d-flex">
+                    <button class="btn btn-normal btn-sm m-1">
+                      Enabled
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm m-1">
+                      X
+                    </button>
                   </td>
                 </tr>
               </template>
@@ -76,7 +78,7 @@
       </div>
 
       <!-- Launch button -->
-      <div style="width: 400px">
+      <div style="min-width: 400px; max-width: 400px">
         <div class="launch-btn-base d-flex align-items-center justify-content-center">
           <button
             class="launch-btn"
@@ -111,9 +113,7 @@ import {
   getInstalls,
   getAvailableMods,
 } from 'satisfactory-mod-launcher-api';
-import marked from 'marked';
 import { spawn } from 'child_process';
-import sanitizeHtml from 'sanitize-html';
 import InstalledMods from '../InstalledMods/InstalledMods';
 
 export default {
@@ -139,9 +139,6 @@ export default {
   computed: {
     noImageURL() {
       return 'https://ficsit.app/static/assets/images/no_image.png';
-    },
-    compiledMarkdownDescription() {
-      return sanitizeHtml(marked(this.selectedMod.full_description || ''));
     },
     hasSMLUpdates() {
       return (
@@ -321,8 +318,8 @@ export default {
 }
 
 .launch-btn {
-  height: 69%;
-  width: 69%;
+  height: 65%;
+  width: 65%;
   background-color: transparent;
   background-image: url(./assats/btn-launch-normal.png);
   background-repeat: no-repeat;
@@ -330,7 +327,7 @@ export default {
   background-position-x: 50%;
   border: none;
   position: relative;
-  top: -13%;
+  top: -15%;
   left: 0;
   transition: ease-out 0.25s;
 }
@@ -354,6 +351,5 @@ export default {
   border: none;
   position: relative;
   padding: 25px 30px;
-  margin-top: -4%;
 }
 </style>

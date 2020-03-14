@@ -30,8 +30,8 @@ function createWindow() {
     useContentSize: true,
     height: 800,
     width: 1200,
-    minHeight: 600,
-    minWidth: 800,
+    minHeight: 800,
+    minWidth: 940,
     frame: false,
     webPreferences: {
       nodeIntegration: true,
