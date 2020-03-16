@@ -1,11 +1,17 @@
 <template>
   <div
-    class="w-100 h-100 d-flex flex-row flex-wrap"
+    class="flex-fill d-flex flex-wrap flex-row m-0 py-4"
   >
-    <slot
+    <!--  -->
+    <div
       v-for="item in objects"
-      :item="item"
-    />
+      :key="item.id"
+      class="mod-card d-flex flex-column align-items-center flex-fill text-center"
+      :class="item == value && canSelect ? 'selected-mod' : ''"
+      @click="clicked(item)"
+    >
+      <slot :item="item" />
+    </div>
   </div>
 </template>
 
@@ -27,7 +33,7 @@ export default {
     },
     canSelect: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   data() {
@@ -62,25 +68,5 @@ export default {
 };
 </script>
 
-<style scoped>
-.mod-card {
-  background-color: var(--c-dark);
-  border: solid var(--c-normal) 2px;
-  border-radius: 10px;
-  height: 400px;
-  width: 250px;
-  position: relative;
-  padding: 15px;
-  padding-top: 85px;
-  margin: 15px;
-  margin-top: 90px;
-  box-shadow: #00000050 2px 2px 5px;
-}
-
-.mod-card img {
-  margin-top: -50px;
-  position: absolute;
-  top: -75px;
-  left: calc(50%-50px);
-}
+<style>
 </style>

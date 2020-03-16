@@ -1,65 +1,66 @@
 <template>
   <div>
-    <header class="d-flex flex-column justify-content-center p-4">
+    <header class="d-flex flex-column justify-content-center px-4">
       <h1>AWESOME Mods Repo</h1>
-      <p>Subtitle . . .</p>
+      <input
+        v-model="search"
+        class="form-control"
+        type="text"
+        placeholder="Search"
+      >
     </header>
 
     <div class="d-flex flex-row">
       <!-- Mods list -->
-      <div
-        class="flex-fill d-flex flex-wrap flex-column m-0 py-4"
-        style="overflow: auto; height: calc(100vh - 215px);"
+      <ModsList
+        v-if="searchMods"
+        v-model="selectedMod"
+        :objects="searchMods"
+        :can-select="true"
+        style="overflow: auto; height: calc(100vh - 215px); min-width: 300px"
       >
-        <ModsList
-          v-model="selectedMod"
-          :objects="searchMods"
-        >
-          <template slot-scope="{ item }">
-            <div
-              :key="item.id"
-              class="mod-card d-flex flex-column align-items-center flex-fill text-center"
-              :class="!isModUpdated(item) ? 'outdated' : ''"
-            >
-              <img
-                :src="item.logo || noImageURL"
-                height="100%"
-                class="m-0 p-0"
-              >
-              <h6>
-                {{ item.name || "" }}
-                <br>
-                <small>
-                  By {{
-                    item.authors.map(author => author.user.username).join(", ")
-                  }}
-                </small>
-              </h6>
-              <span
-                class="w-100 bg-sec m-2"
-                style="height: 1px;"
-              />
-              <p>{{ item.short_description || "" }}</p>
-              <span
-                class="w-100 bg-sec m-2 mt-auto"
-                style="height: 1px;"
-              />
-              <button
-                class="btn btn-normal btn-block m-1"
-                :disabled="!isModUpdated(item)"
-              >
-                {{
-                  !isModUpdated(item) ? "Outdated" : "Install"
-                }}
-              </button>
-            </div>
-          </template>
-        </ModsList>
-      </div>
+        <template slot-scope="{ item }">
+          <img
+            :src="item.logo || noImageURL"
+            height="100%"
+            class="m-0 p-0"
+          >
+          <h6>
+            {{ item.name || "" }}
+            <br>
+            <small>
+              By {{
+                item.authors.map(author => author.user.username).join(", ")
+              }}
+            </small>
+          </h6>
+          <span
+            class="w-100 bg-sec m-2"
+            style="height: 1px;"
+          />
+          <p>{{ item.short_description || "" }}</p>
+          <span
+            class="w-100 bg-sec m-2 mt-auto"
+            style="height: 1px;"
+          />
+          <button
+            class="btn btn-normal btn-block m-1"
+            :disabled="!isModUpdated(item)"
+          >
+            {{
+              !isModUpdated(item) ? "Outdated" : "Install"
+            }}
+          </button>
+        </template>
+      </ModsList>
 
       <!-- Detail panel -->
-      <div style="min-width: 500px; height: calc(100vh - 215px); overflow: auto;">
-        <p>Detail panel</p>
+      <div
+        v-if="selectedMod != null"
+        style="min-width: 500px; height: calc(100vh - 215px); overflow: auto;"
+      >
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <div v-html="compiledMarkdownDescription" />
       </div>
     </div>
   </div>
@@ -68,12 +69,9 @@
 <script>
 // TODO: display errors
 import semver from 'semver';
-import {
-  getLatestSMLVersion,
-  getInstalls,
-  getAvailableMods,
-} from 'satisfactory-mod-launcher-api';
-import { spawn } from 'child_process';
+import marked from 'marked';
+import sanitizeHtml from 'sanitize-html';
+import { getAvailableMods } from 'satisfactory-mod-launcher-api';
 import ModsList from '../ModsList/ModsList';
 
 export default {
@@ -83,12 +81,7 @@ export default {
   },
   data() {
     return {
-      selectedSatisfactoryInstall: null,
-      satisfactoryInstalls: [],
       availableMods: [],
-      installedSMLVersion: '',
-      latestSMLVersion: {},
-      SMLInProgress: false,
       selectedMod: {},
       searchMods: [],
       search: '',
@@ -100,15 +93,8 @@ export default {
     noImageURL() {
       return 'https://ficsit.app/static/assets/images/no_image.png';
     },
-    hasSMLUpdates() {
-      return (
-        !semver.valid(this.installedSMLVersion)
-        || (semver.valid(this.latestSMLVersion.version)
-          && semver.lt(this.installedSMLVersion, this.latestSMLVersion.version))
-      );
-    },
-    isSMLInstalled() {
-      return !!semver.valid(this.installedSMLVersion);
+    compiledMarkdownDescription() {
+      return sanitizeHtml(marked(this.selectedMod.full_description || ''));
     },
   },
   watch: {
@@ -135,13 +121,7 @@ export default {
     });
   },
   created() {
-    Promise.all([
-      this.refreshSatisfactoryInstalls(),
-      this.refreshAvailableMods(),
-      getLatestSMLVersion().then((smlVersion) => {
-        this.latestSMLVersion = smlVersion.version;
-      }),
-    ]).then(() => {
+    Promise.all([this.refreshAvailableMods()]).then(() => {
       this.$electron.ipcRenderer.send('vue-ready');
     });
   },
@@ -225,30 +205,6 @@ export default {
           this.inProgress.splice(this.inProgress.indexOf(modVersion));
         });
     },
-    toggleModInstalled(modVersion) {
-      this.inProgress.push(modVersion);
-      if (this.isModVersionInstalled(modVersion)) {
-        this.uninstallMod(modVersion);
-      } else {
-        this.installMod(modVersion);
-      }
-    },
-    refreshSatisfactoryInstalls() {
-      return getInstalls().then((installs) => {
-        this.satisfactoryInstalls = installs;
-        if (this.satisfactoryInstalls.length > 0) {
-          const defaultInstall = this.satisfactoryInstalls[0];
-          this.selectedSatisfactoryInstall = defaultInstall;
-        }
-      });
-    },
-    launchSatisfactory() {
-      if (this.selectedSatisfactoryInstall) {
-        spawn(this.selectedSatisfactoryInstall.launchPath, {
-          detached: true,
-        }).unref();
-      }
-    },
     updateSML() {
       this.SMLInProgress = true;
       return this.selectedSatisfactoryInstall.updateSML().then(() => {
@@ -289,5 +245,14 @@ export default {
   width: 150px;
   object-fit: contain;
   border-radius: 25px;
+}
+
+.mod-card.selected-mod {
+  background-color: var(--c-normal);
+}
+
+pre, code {
+  background-color: var(--c-dark) !important;
+  color: #fff !important;
 }
 </style>
