@@ -57,6 +57,12 @@ export default {
   color: #fff !important;
 }
 
+.btn-normal:disabled {
+  background-color: var(--c-dark) !important;
+  color: #fff !important;
+  cursor: default;
+}
+
 .btn-sec {
   background-color: var(--c-sec) !important;
   color: #fff !important;
@@ -70,6 +76,12 @@ export default {
 .btn-sec:active {
   background-color: var(--c-active) !important;
   color: #fff !important;
+}
+
+.btn-sec:disabled {
+  background-color: var(--c-dark) !important;
+  color: #fff !important;
+  cursor: default;
 }
 
 *:focus,
@@ -139,7 +151,7 @@ main,
 
 .view {
   height: 100vh;
-  overflow: auto;
+  overflow: hidden;
   margin: 0;
   padding: 0;
 }
