@@ -89,6 +89,15 @@ export default {
   outline: none !important;
 }
 
+*::selection {
+  background-color: var(--c-active) !important;
+  color: #fff !important;
+}
+
+img::selection {
+  background-color: transparent !important;
+}
+
 .disabled,
 .outdated {
   color: var(--c-light);
@@ -113,6 +122,16 @@ export default {
 @font-face {
   font-family: "Orbitron medium";
   src: url("assets/fonts/orbitron-medium.otf") format("otf");
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Segoe UI" !important;
+  font-weight: bold !important;
 }
 
 h1 {
