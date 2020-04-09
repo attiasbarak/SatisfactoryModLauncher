@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="flex-fill d-flex flex-wrap flex-row m-0 py-4"
-  >
-    <!--  -->
+  <div class="flex-fill d-flex flex-wrap flex-row m-0 py-4">
     <div
       v-for="item in objects"
       :key="item.id"
@@ -19,7 +16,7 @@
 import arrayEqual from 'array-equal';
 
 export default {
-  name: 'List',
+  name: 'ModsList',
   props: {
     objects: {
       type: Array,
@@ -38,7 +35,7 @@ export default {
   },
   data() {
     return {
-      selectedIndex: 0,
+      selectedIndex: -1,
     };
   },
   watch: {

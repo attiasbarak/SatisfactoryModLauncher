@@ -60,7 +60,12 @@
         style="min-width: 500px; height: calc(100vh - 215px); overflow: auto;"
       >
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <div v-html="compiledMarkdownDescription" />
+        <div
+          class="p-4"
+          v-html="compiledMarkdownDescription"
+        >
+          Click on the mod card to view more details.
+        </div>
       </div>
     </div>
   </div>
@@ -251,7 +256,8 @@ export default {
   background-color: var(--c-normal);
 }
 
-pre, code {
+pre,
+code {
   background-color: var(--c-dark) !important;
   color: #fff !important;
 }
